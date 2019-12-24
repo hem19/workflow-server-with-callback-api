@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="46ab13813d424da3807a22916c406660" Name="Diagram1">
+        <EntityTypeShape EntityType="wfe_sampleModel.Employee" Width="1.5" PointX="5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="wfe_sampleModel.Role" Width="1.5" PointX="2.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="wfe_sampleModel.WorkflowGlobalParameter" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="wfe_sampleModel.WorkflowInbox" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="wfe_sampleModel.WorkflowProcessInstance" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="wfe_sampleModel.WorkflowProcessInstancePersistence" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="wfe_sampleModel.WorkflowProcessInstanceStatu" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="wfe_sampleModel.WorkflowProcessScheme" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="wfe_sampleModel.WorkflowProcessTimer" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="wfe_sampleModel.WorkflowProcessTransitionHistory" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="wfe_sampleModel.WorkflowScheme" Width="1.5" PointX="8.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="wfe_sampleModel.WorkflowServerProcessHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="wfe_sampleModel.WorkflowServerStat" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="wfe_sampleModel.FK_Employee_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="wfe_sampleModel.FK_WorkflowServerProcessHistory_WorkflowServerProcessHistory" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

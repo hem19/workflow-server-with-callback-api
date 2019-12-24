@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="wfe_sampleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowGlobalParameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="306" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowInbox">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProcessId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdentityId" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowProcessInstance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar(max)" />
+          <Property Name="ActivityName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SchemeId" Type="uniqueidentifier" />
+          <Property Name="PreviousState" Type="nvarchar(max)" />
+          <Property Name="PreviousStateForDirect" Type="nvarchar(max)" />
+          <Property Name="PreviousStateForReverse" Type="nvarchar(max)" />
+          <Property Name="PreviousActivity" Type="nvarchar(max)" />
+          <Property Name="PreviousActivityForDirect" Type="nvarchar(max)" />
+          <Property Name="PreviousActivityForReverse" Type="nvarchar(max)" />
+          <Property Name="ParentProcessId" Type="uniqueidentifier" />
+          <Property Name="RootProcessId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsDeterminingParametersChanged" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowProcessInstancePersistence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProcessId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ParameterName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowProcessInstanceStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
+          <Property Name="Lock" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowProcessScheme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Scheme" Type="ntext" Nullable="false" />
+          <Property Name="DefiningParameters" Type="ntext" Nullable="false" />
+          <Property Name="DefiningParametersHash" Type="nvarchar" MaxLength="24" Nullable="false" />
+          <Property Name="SchemeCode" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="IsObsolete" Type="bit" Nullable="false" />
+          <Property Name="RootSchemeCode" Type="nvarchar" MaxLength="256" />
+          <Property Name="RootSchemeId" Type="uniqueidentifier" />
+          <Property Name="AllowedActivities" Type="nvarchar(max)" />
+          <Property Name="StartingTransition" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="WorkflowProcessTimer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProcessId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NextExecutionDateTime" Type="datetime" Nullable="false" />
+          <Property Name="Ignore" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowProcessTransitionHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProcessId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ExecutorIdentityId" Type="nvarchar" MaxLength="256" />
+          <Property Name="ActorIdentityId" Type="nvarchar" MaxLength="256" />
+          <Property Name="FromActivityName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ToActivityName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ToStateName" Type="nvarchar(max)" />
+          <Property Name="TransitionTime" Type="datetime" Nullable="false" />
+          <Property Name="TransitionClassifier" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsFinalised" Type="bit" Nullable="false" />
+          <Property Name="FromStateName" Type="nvarchar(max)" />
+          <Property Name="TriggerName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="WorkflowScheme">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Scheme" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CanBeInlined" Type="bit" Nullable="false" />
+          <Property Name="InlinedSchemes" Type="nvarchar(max)" />
+          <Property Name="DeleteFinalized" Type="bit" Nullable="false" />
+          <Property Name="DontFillIndox" Type="bit" Nullable="false" />
+          <Property Name="DontPreExecute" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowServerProcessHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProcessId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdentityId" Type="nvarchar" MaxLength="256" />
+          <Property Name="AllowedToEmployeeNames" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TransitionTime" Type="datetime" />
+          <Property Name="Order" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InitialState" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="DestinationState" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="Command" Type="nvarchar" MaxLength="1024" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowServerStats">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="DateFrom" Type="datetime" Nullable="false" />
+          <Property Name="DateTo" Type="datetime" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="IsSuccess" Type="bit" Nullable="false" />
+          <Property Name="ProcessId" Type="uniqueidentifier" />
+        </EntityType>
+        <Association Name="FK_Employee_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkflowServerProcessHistory_WorkflowServerProcessHistory">
+          <End Role="WorkflowServerProcessHistory" Type="Self.WorkflowServerProcessHistory" Multiplicity="1" />
+          <End Role="WorkflowServerProcessHistory1" Type="Self.WorkflowServerProcessHistory" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowServerProcessHistory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkflowServerProcessHistory1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="wfe_sampleModelStoreContainer">
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkflowGlobalParameter" EntityType="Self.WorkflowGlobalParameter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkflowInbox" EntityType="Self.WorkflowInbox" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkflowProcessInstance" EntityType="Self.WorkflowProcessInstance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkflowProcessInstancePersistence" EntityType="Self.WorkflowProcessInstancePersistence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkflowProcessInstanceStatus" EntityType="Self.WorkflowProcessInstanceStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkflowProcessScheme" EntityType="Self.WorkflowProcessScheme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkflowProcessTimer" EntityType="Self.WorkflowProcessTimer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkflowProcessTransitionHistory" EntityType="Self.WorkflowProcessTransitionHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkflowScheme" EntityType="Self.WorkflowScheme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkflowServerProcessHistory" EntityType="Self.WorkflowServerProcessHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkflowServerStats" EntityType="Self.WorkflowServerStats" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_Roles" Association="Self.FK_Employee_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkflowServerProcessHistory_WorkflowServerProcessHistory" Association="Self.FK_WorkflowServerProcessHistory_WorkflowServerProcessHistory">
+            <End Role="WorkflowServerProcessHistory" EntitySet="WorkflowServerProcessHistory" />
+            <End Role="WorkflowServerProcessHistory1" EntitySet="WorkflowServerProcessHistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="wfe_sampleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Employee_Roles" FromRole="Employee" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Roles" FromRole="Roles" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="WorkflowGlobalParameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="306" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowInbox">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProcessId" Type="Guid" Nullable="false" />
+          <Property Name="IdentityId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowProcessInstance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="StateName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ActivityName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SchemeId" Type="Guid" />
+          <Property Name="PreviousState" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PreviousStateForDirect" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PreviousStateForReverse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PreviousActivity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PreviousActivityForDirect" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PreviousActivityForReverse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ParentProcessId" Type="Guid" />
+          <Property Name="RootProcessId" Type="Guid" Nullable="false" />
+          <Property Name="IsDeterminingParametersChanged" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowProcessInstancePersistence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProcessId" Type="Guid" Nullable="false" />
+          <Property Name="ParameterName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowProcessInstanceStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="Lock" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowProcessScheme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Scheme" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DefiningParameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DefiningParametersHash" Type="String" MaxLength="24" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SchemeCode" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsObsolete" Type="Boolean" Nullable="false" />
+          <Property Name="RootSchemeCode" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="RootSchemeId" Type="Guid" />
+          <Property Name="AllowedActivities" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartingTransition" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="WorkflowProcessTimer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProcessId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NextExecutionDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ignore" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowProcessTransitionHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProcessId" Type="Guid" Nullable="false" />
+          <Property Name="ExecutorIdentityId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ActorIdentityId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FromActivityName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ToActivityName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ToStateName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TransitionTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TransitionClassifier" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsFinalised" Type="Boolean" Nullable="false" />
+          <Property Name="FromStateName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TriggerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="WorkflowScheme">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Scheme" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CanBeInlined" Type="Boolean" Nullable="false" />
+          <Property Name="InlinedSchemes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeleteFinalized" Type="Boolean" Nullable="false" />
+          <Property Name="DontFillIndox" Type="Boolean" Nullable="false" />
+          <Property Name="DontPreExecute" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowServerProcessHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProcessId" Type="Guid" Nullable="false" />
+          <Property Name="IdentityId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AllowedToEmployeeNames" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TransitionTime" Type="DateTime" Precision="3" />
+          <Property Name="Order" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InitialState" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DestinationState" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Command" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="WorkflowServerProcessHistory1" Relationship="Self.FK_WorkflowServerProcessHistory_WorkflowServerProcessHistory" FromRole="WorkflowServerProcessHistory" ToRole="WorkflowServerProcessHistory1" />
+          <NavigationProperty Name="WorkflowServerProcessHistory2" Relationship="Self.FK_WorkflowServerProcessHistory_WorkflowServerProcessHistory" FromRole="WorkflowServerProcessHistory1" ToRole="WorkflowServerProcessHistory" />
+        </EntityType>
+        <EntityType Name="WorkflowServerStat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateTo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="IsSuccess" Type="Boolean" Nullable="false" />
+          <Property Name="ProcessId" Type="Guid" />
+        </EntityType>
+        <Association Name="FK_Employee_Roles">
+          <End Role="Roles" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkflowServerProcessHistory_WorkflowServerProcessHistory">
+          <End Role="WorkflowServerProcessHistory" Type="Self.WorkflowServerProcessHistory" Multiplicity="1" />
+          <End Role="WorkflowServerProcessHistory1" Type="Self.WorkflowServerProcessHistory" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowServerProcessHistory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkflowServerProcessHistory1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="wfe_sampleEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="WorkflowGlobalParameters" EntityType="Self.WorkflowGlobalParameter" />
+          <EntitySet Name="WorkflowInboxes" EntityType="Self.WorkflowInbox" />
+          <EntitySet Name="WorkflowProcessInstances" EntityType="Self.WorkflowProcessInstance" />
+          <EntitySet Name="WorkflowProcessInstancePersistences" EntityType="Self.WorkflowProcessInstancePersistence" />
+          <EntitySet Name="WorkflowProcessInstanceStatus" EntityType="Self.WorkflowProcessInstanceStatu" />
+          <EntitySet Name="WorkflowProcessSchemes" EntityType="Self.WorkflowProcessScheme" />
+          <EntitySet Name="WorkflowProcessTimers" EntityType="Self.WorkflowProcessTimer" />
+          <EntitySet Name="WorkflowProcessTransitionHistories" EntityType="Self.WorkflowProcessTransitionHistory" />
+          <EntitySet Name="WorkflowSchemes" EntityType="Self.WorkflowScheme" />
+          <EntitySet Name="WorkflowServerProcessHistories" EntityType="Self.WorkflowServerProcessHistory" />
+          <EntitySet Name="WorkflowServerStats" EntityType="Self.WorkflowServerStat" />
+          <AssociationSet Name="FK_Employee_Roles" Association="Self.FK_Employee_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkflowServerProcessHistory_WorkflowServerProcessHistory" Association="Self.FK_WorkflowServerProcessHistory_WorkflowServerProcessHistory">
+            <End Role="WorkflowServerProcessHistory" EntitySet="WorkflowServerProcessHistories" />
+            <End Role="WorkflowServerProcessHistory1" EntitySet="WorkflowServerProcessHistories" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="wfe_sampleModelStoreContainer" CdmEntityContainer="wfe_sampleEntities">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="wfe_sampleModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="wfe_sampleModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowGlobalParameters">
+            <EntityTypeMapping TypeName="wfe_sampleModel.WorkflowGlobalParameter">
+              <MappingFragment StoreEntitySet="WorkflowGlobalParameter">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowInboxes">
+            <EntityTypeMapping TypeName="wfe_sampleModel.WorkflowInbox">
+              <MappingFragment StoreEntitySet="WorkflowInbox">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+                <ScalarProperty Name="IdentityId" ColumnName="IdentityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowProcessInstances">
+            <EntityTypeMapping TypeName="wfe_sampleModel.WorkflowProcessInstance">
+              <MappingFragment StoreEntitySet="WorkflowProcessInstance">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+                <ScalarProperty Name="SchemeId" ColumnName="SchemeId" />
+                <ScalarProperty Name="PreviousState" ColumnName="PreviousState" />
+                <ScalarProperty Name="PreviousStateForDirect" ColumnName="PreviousStateForDirect" />
+                <ScalarProperty Name="PreviousStateForReverse" ColumnName="PreviousStateForReverse" />
+                <ScalarProperty Name="PreviousActivity" ColumnName="PreviousActivity" />
+                <ScalarProperty Name="PreviousActivityForDirect" ColumnName="PreviousActivityForDirect" />
+                <ScalarProperty Name="PreviousActivityForReverse" ColumnName="PreviousActivityForReverse" />
+                <ScalarProperty Name="ParentProcessId" ColumnName="ParentProcessId" />
+                <ScalarProperty Name="RootProcessId" ColumnName="RootProcessId" />
+                <ScalarProperty Name="IsDeterminingParametersChanged" ColumnName="IsDeterminingParametersChanged" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowProcessInstancePersistences">
+            <EntityTypeMapping TypeName="wfe_sampleModel.WorkflowProcessInstancePersistence">
+              <MappingFragment StoreEntitySet="WorkflowProcessInstancePersistence">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+                <ScalarProperty Name="ParameterName" ColumnName="ParameterName" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowProcessInstanceStatus">
+            <EntityTypeMapping TypeName="wfe_sampleModel.WorkflowProcessInstanceStatu">
+              <MappingFragment StoreEntitySet="WorkflowProcessInstanceStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Lock" ColumnName="Lock" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowProcessSchemes">
+            <EntityTypeMapping TypeName="wfe_sampleModel.WorkflowProcessScheme">
+              <MappingFragment StoreEntitySet="WorkflowProcessScheme">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Scheme" ColumnName="Scheme" />
+                <ScalarProperty Name="DefiningParameters" ColumnName="DefiningParameters" />
+                <ScalarProperty Name="DefiningParametersHash" ColumnName="DefiningParametersHash" />
+                <ScalarProperty Name="SchemeCode" ColumnName="SchemeCode" />
+                <ScalarProperty Name="IsObsolete" ColumnName="IsObsolete" />
+                <ScalarProperty Name="RootSchemeCode" ColumnName="RootSchemeCode" />
+                <ScalarProperty Name="RootSchemeId" ColumnName="RootSchemeId" />
+                <ScalarProperty Name="AllowedActivities" ColumnName="AllowedActivities" />
+                <ScalarProperty Name="StartingTransition" ColumnName="StartingTransition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowProcessTimers">
+            <EntityTypeMapping TypeName="wfe_sampleModel.WorkflowProcessTimer">
+              <MappingFragment StoreEntitySet="WorkflowProcessTimer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NextExecutionDateTime" ColumnName="NextExecutionDateTime" />
+                <ScalarProperty Name="Ignore" ColumnName="Ignore" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowProcessTransitionHistories">
+            <EntityTypeMapping TypeName="wfe_sampleModel.WorkflowProcessTransitionHistory">
+              <MappingFragment StoreEntitySet="WorkflowProcessTransitionHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+                <ScalarProperty Name="ExecutorIdentityId" ColumnName="ExecutorIdentityId" />
+                <ScalarProperty Name="ActorIdentityId" ColumnName="ActorIdentityId" />
+                <ScalarProperty Name="FromActivityName" ColumnName="FromActivityName" />
+                <ScalarProperty Name="ToActivityName" ColumnName="ToActivityName" />
+                <ScalarProperty Name="ToStateName" ColumnName="ToStateName" />
+                <ScalarProperty Name="TransitionTime" ColumnName="TransitionTime" />
+                <ScalarProperty Name="TransitionClassifier" ColumnName="TransitionClassifier" />
+                <ScalarProperty Name="IsFinalised" ColumnName="IsFinalised" />
+                <ScalarProperty Name="FromStateName" ColumnName="FromStateName" />
+                <ScalarProperty Name="TriggerName" ColumnName="TriggerName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowSchemes">
+            <EntityTypeMapping TypeName="wfe_sampleModel.WorkflowScheme">
+              <MappingFragment StoreEntitySet="WorkflowScheme">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Scheme" ColumnName="Scheme" />
+                <ScalarProperty Name="CanBeInlined" ColumnName="CanBeInlined" />
+                <ScalarProperty Name="InlinedSchemes" ColumnName="InlinedSchemes" />
+                <ScalarProperty Name="DeleteFinalized" ColumnName="DeleteFinalized" />
+                <ScalarProperty Name="DontFillIndox" ColumnName="DontFillIndox" />
+                <ScalarProperty Name="DontPreExecute" ColumnName="DontPreExecute" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowServerProcessHistories">
+            <EntityTypeMapping TypeName="wfe_sampleModel.WorkflowServerProcessHistory">
+              <MappingFragment StoreEntitySet="WorkflowServerProcessHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+                <ScalarProperty Name="IdentityId" ColumnName="IdentityId" />
+                <ScalarProperty Name="AllowedToEmployeeNames" ColumnName="AllowedToEmployeeNames" />
+                <ScalarProperty Name="TransitionTime" ColumnName="TransitionTime" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="InitialState" ColumnName="InitialState" />
+                <ScalarProperty Name="DestinationState" ColumnName="DestinationState" />
+                <ScalarProperty Name="Command" ColumnName="Command" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowServerStats">
+            <EntityTypeMapping TypeName="wfe_sampleModel.WorkflowServerStat">
+              <MappingFragment StoreEntitySet="WorkflowServerStats">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="IsSuccess" ColumnName="IsSuccess" />
+                <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
