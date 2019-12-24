@@ -1,4 +1,9 @@
-1. Go to Workflow Server and upload "leave-request-wf.xml" file and save the scheme as "leave-request-wf".
-2. Default Workflow Server deployed URL is http://localhost:8077. Search for this value and change everywhere in the project, if workflow-server is deployed on different port.
-3. Build the Angular project using command "ng build"
-4. Open the http://localhost:4200 URL to access the build website
+This sample uses https://workflowengine.io/demo/Designer/API as a backend.
+
+**Make sure that you enable CORS in your browser (!!!)** 
+
+Instruction: [for chrome](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en), [for others](https://www.google.com/search?ei=M28OXO7BDauk_QaC06DABg&q=browser+how+to+enable+CORS&oq=browser+how+to+enable+CORS).
+
+
+If you set up your [own backend with DesignerAPI](https://workflowengine.io/documentation/main-terms/designer/#backend), replace apiurl in app.component.ts file.
+
