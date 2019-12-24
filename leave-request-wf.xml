@@ -1,0 +1,104 @@
+<Process Name="leave-request-wf" CanBeInlined="false">
+  <Designer />
+  <Actors>
+    <Actor Name="Authorized" Rule="IsAuthorized" Value="" />
+    <Actor Name="Self" Rule="IsSelf" Value="" />
+  </Actors>
+  <Parameters>
+    <Parameter Name="AutoApprovedLeaveDays" Type="Int32" Purpose="Persistence" InitialValue="2" />
+    <Parameter Name="LeaveDays" Type="Int32" Purpose="Persistence" />
+  </Parameters>
+  <Commands>
+    <Command Name="Approve" />
+    <Command Name="Reject" />
+  </Commands>
+  <Timers>
+    <Timer Name="AutoApprovalTimer" Type="Interval" Value="60m" NotOverrideIfExists="false" />
+  </Timers>
+  <Activities>
+    <Activity Name="Leave Request Created" State="Initial" IsInitial="True" IsFinal="False" IsForSetState="True" IsAutoSchemeUpdate="True">
+      <Implementation>
+        <ActionRef Order="1" NameRef="UpdateProcessHistory" />
+      </Implementation>
+      <PreExecutionImplementation>
+        <ActionRef Order="1" NameRef="WriteProcessHistory" />
+      </PreExecutionImplementation>
+      <Designer X="140" Y="240" />
+    </Activity>
+    <Activity Name="Request sent for approval" IsInitial="False" IsFinal="False" IsForSetState="True" IsAutoSchemeUpdate="True">
+      <Implementation>
+        <ActionRef Order="1" NameRef="UpdateProcessHistory" />
+      </Implementation>
+      <PreExecutionImplementation>
+        <ActionRef Order="1" NameRef="WriteProcessHistory" />
+      </PreExecutionImplementation>
+      <Designer X="520" Y="240" />
+    </Activity>
+    <Activity Name="Request Approved" State="Final" IsInitial="False" IsFinal="True" IsForSetState="True" IsAutoSchemeUpdate="True">
+      <Implementation>
+        <ActionRef Order="1" NameRef="UpdateProcessHistory" />
+      </Implementation>
+      <PreExecutionImplementation>
+        <ActionRef Order="1" NameRef="WriteProcessHistory" />
+      </PreExecutionImplementation>
+      <Designer X="900" Y="240" />
+    </Activity>
+    <Activity Name="Request Rejected" State="Final" IsInitial="False" IsFinal="True" IsForSetState="True" IsAutoSchemeUpdate="True">
+      <Implementation>
+        <ActionRef Order="1" NameRef="UpdateProcessHistory" />
+      </Implementation>
+      <PreExecutionImplementation>
+        <ActionRef Order="1" NameRef="WriteProcessHistory" />
+      </PreExecutionImplementation>
+      <Designer X="530" Y="430" />
+    </Activity>
+  </Activities>
+  <Transitions>
+    <Transition Name="Leave Request Created_Activity_1_1" To="Request sent for approval" From="Leave Request Created" Classifier="Direct" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" IsFork="false" MergeViaSetState="false" DisableParentStateControl="false">
+      <Triggers>
+        <Trigger Type="Auto" />
+      </Triggers>
+      <Conditions>
+        <Condition Type="Otherwise" />
+      </Conditions>
+      <Designer />
+    </Transition>
+    <Transition Name="Request sent for approval_Activity_1_1" To="Request Approved" From="Request sent for approval" Classifier="Direct" AllowConcatenationType="Or" RestrictConcatenationType="And" ConditionsConcatenationType="And" IsFork="false" MergeViaSetState="false" DisableParentStateControl="false">
+      <Restrictions>
+        <Restriction Type="Allow" NameRef="Authorized" />
+        <Restriction Type="Restrict" NameRef="Self" />
+      </Restrictions>
+      <Triggers>
+        <Trigger Type="Command" NameRef="Approve" />
+      </Triggers>
+      <Conditions>
+        <Condition Type="Always" />
+      </Conditions>
+      <Designer />
+    </Transition>
+    <Transition Name="Request sent for approval_Activity_1_2" To="Request Rejected" From="Request sent for approval" Classifier="Direct" AllowConcatenationType="Or" RestrictConcatenationType="And" ConditionsConcatenationType="And" IsFork="false" MergeViaSetState="false" DisableParentStateControl="false">
+      <Restrictions>
+        <Restriction Type="Allow" NameRef="Authorized" />
+        <Restriction Type="Restrict" NameRef="Self" />
+      </Restrictions>
+      <Triggers>
+        <Trigger Type="Command" NameRef="Reject" />
+      </Triggers>
+      <Conditions>
+        <Condition Type="Always" />
+      </Conditions>
+      <Designer />
+    </Transition>
+    <Transition Name="Leave Request Created_Request Approved_1" To="Request Approved" From="Leave Request Created" Classifier="NotSpecified" AllowConcatenationType="And" RestrictConcatenationType="And" ConditionsConcatenationType="And" IsFork="false" MergeViaSetState="false" DisableParentStateControl="false">
+      <Triggers>
+        <Trigger Type="Auto" />
+      </Triggers>
+      <Conditions>
+        <Condition Type="Action" NameRef="IsManagerApprovalNeeded" ConditionInversion="true">
+          <ActionParameter><![CDATA[LeaveDays]]></ActionParameter>
+        </Condition>
+      </Conditions>
+      <Designer X="623.5" Y="185" />
+    </Transition>
+  </Transitions>
+</Process>
