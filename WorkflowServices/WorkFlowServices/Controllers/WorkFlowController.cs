@@ -1,6 +1,4 @@
-﻿using OptimaJet.Workflow.Core.Model;
-using OptimaJet.Workflow.Core.Runtime;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -142,7 +140,9 @@ namespace WorkFlowServices.Controllers
             else
             {
                 //var abc = executeParams.ProcessInstance.GetParameter<int>(executeParams.Parameter);
-                int leaveDays = 0;//Convert.ToInt32(processInstance.GetParameter("LeaveDays").Value);
+                //int leaveDays = 0;//Convert.ToInt32(processInstance.GetParameter("LeaveDays").Value);
+                var leaveDays = (long)executeParams.ProcessInstance.ProcessParameters["leaveDays"]; //JSON deserialization artifact. The names starts from lower case
+                var autoApprovedLeaveDays = (long)executeParams.ProcessInstance.ProcessParameters["autoApprovedLeaveDays"];
 
                 object[] paramsArray = new object[] { executeParams.ProcessInstance.RootProcessId };
                 result = mInfo.Invoke(classInstance, paramsArray);
@@ -223,6 +223,6 @@ namespace WorkFlowServices.Controllers
         public string Name;
         public string IdentityId;
         public string Parameter;
-        public ProcessInstance ProcessInstance;
+        public OptimaJet.WorkflowServer.Model.WorkflowProcessInstance ProcessInstance;
     }
 }

@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { SharedService } from 'src/app/shared-services/shared.service';
 
+declare let WorkflowDesigner: any;
+declare let WorkflowDesignerForm: any;
+
 @Component({
   selector: 'app-wf-designer',
   templateUrl: './wf-designer.component.html',
@@ -43,13 +46,56 @@ export class WfDesignerComponent implements OnInit {
       this.wfdesigner.destroy();
     }
 
-    this.wfdesigner = new window["WorkflowDesigner"]({
+    this.wfdesigner = new WorkflowDesigner({
       name: 'simpledesigner',
       apiurl: this.apiurl,
       renderTo: 'wfdesigner',
       imagefolder: '/assets/workflow/images/',
       graphwidth: window.innerWidth - this.offsetX,
-      graphheight: window.innerHeight - this.offsetY
+      graphheight: window.innerHeight - this.offsetY,
+      forms: {
+        activity: function (params) {
+          console.log(params);
+          params.elements = [
+             { name: "Name", field: "Name", type: "input" },
+             { name: "State", field: "State", type: "input" }
+          ];
+          var form = new WorkflowDesignerForm(params);
+          var saveFunc = function (data) {
+             form.ClearTempField(data);
+             form.parameters.saveFunc(Object.assign(params.data, data));
+             return true;
+          };
+          form.showModal(saveFunc);
+        },
+        // transition:  function(params){
+        //     console.log(params);
+        // },
+        // actors:  function(params){
+        //     console.log(params);
+        // },
+        // commands:  function(params){
+        //     console.log(params);
+        // },
+        // timers:  function(params){
+        //     console.log(params);
+        // },
+        // codeactions:  function(params){
+        //     console.log(params);
+        // },
+        // parameters:  function(params){
+        //     console.log(params);
+        // },
+        // localization:  function(params){
+        //     console.log(params);
+        // },
+        // legend: function(params){
+        //     console.log(params);
+        // },
+        // processinfo: function(params){
+        //     console.log(params);
+        // }
+      },
     });
 
     if (data == undefined) {
