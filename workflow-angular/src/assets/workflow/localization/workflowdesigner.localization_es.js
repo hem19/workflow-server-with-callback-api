@@ -1,4 +1,4 @@
-﻿var AngularBPWorkflowDesignerConstants = {
+var WorkflowDesignerConstants = {
   ActivityColor: "#ECF0F1",
   ActivityTextColor: "#2D3436",
   ActivityInitialColor: "#27AE60",
@@ -28,6 +28,7 @@
   ButtonTextRedo: "Rehacer",
   SaveConfirm: "¿Guardar cambios?",
   CloseWithoutSaving: "¿Cerrar sin guardar?",
+  TransitionAuto: 'Auto',
   DialogConfirmText: "Pregunta",
   None: "Ninguna",
   Warning: "Advertencia",
@@ -39,6 +40,7 @@
   ActivityNamePrefix: "Actividad_",
   ActivityFormLabel: {
     Title: "Actividad",
+    TitleForInline: 'Activity Inline',
     Name: "Nombre",
     State: "Estado",
     IsInitial: "Inicial",
@@ -51,7 +53,11 @@
     ImpAction: "Acción",
     ImpActionParameter: "Parámetro de acción",
     AlwaysConditionShouldBeSingle: "Siempre la condición debe ser individual",
-    OtherwiseConditionShouldBeSingle: "De lo contrario la condición debe ser única."
+    OtherwiseConditionShouldBeSingle: "De lo contrario la condición debe ser única.",
+    Annotations: 'Annotations',
+    AnnotationName: 'Name',
+    AnnotationValue: 'Value',
+    Scheme: "Inline scheme"
   },
   TransitionFormLabel: {
     Title: "Transición",
@@ -80,7 +86,11 @@
     MergeViaSetState: "Fusionar subproceso a través del estado establecido",
     DisableParentStateControl: "Deshabilitar el control del proceso padre",
     ShowConcatParameters: "Mostrar concatenación",
-    HideConcatParameters: "Ocultar concatenación"
+    HideConcatParameters: "Ocultar concatenación",
+    Annotations: 'Annotations',
+    AnnotationName: 'Name',
+    AnnotationValue: 'Value',
+    InlinedFinalActivityName: "Inlined Final Activity Name"
   },
   LocalizationFormLabel: {
     Title: "Localización",
@@ -131,13 +141,29 @@
     InputParametersParameter: "Parámetro",
     InputParametersDefaultValue: "Defecto"
   },
-  AdditionalParamsFormLabel: {
-    Title: "Parámetros adicionales",
-    IsObsolete: "Es obsoleto",
-    DefiningParameters: "Definiendo parametros",
-    ProcessParameters: "Parámetros de proceso",
-    ProcessParametersName: "Nombre",
-    ProcessParametersValue: "Valor"
+  ProcessInfoFormLabel: {
+    Title: 'Additional Parameters',
+    IsObsolete: "IsObsolete",
+    DefiningParameters: 'Defining parameters',
+    ProcessParameters: 'Process parameters',
+    SystemParametersTabName: 'System Parameters',
+    ProcessParametersTabName: 'Process Parameters',
+    HistoryTabName: 'History',
+    TimersTabName: 'Timers',
+    HistoryTabFromLabel: 'From',
+    HistoryTabFromStateLabel: 'From State',
+    HistoryTabToLabel: 'To',
+    HistoryTabToStateLabel: 'To State',
+    HistoryTabExecutorIdLabel: 'Executor Id',
+    HistoryTabActorIdLabel: 'Actor Id',
+    HistoryTabTimeLabel: 'Time',
+    HistoryTabTriggerNameLabel: 'Trigger Name',
+    HistoryTabTransitionClassifierNameLabel: '',
+    ParametersNameLabel: 'Name',
+    ParametersValueLabel: 'Value',
+    TimersTabNameLabel: 'Name',
+    TimersTabValueLabel: 'Value',
+    RootProcess: "Root Process"
   },
   CodeActionsFormLabel: {
     Title: "Acciones de código",
@@ -147,10 +173,33 @@
     IsAsync: "Asíncrono",
     Type: "Tipo",
     GlobalDeleteMessage: "Has eliminado Global CodeAction. <br/> <b> ¡Otros esquemas no podrán llamar a esta CodeAction! </b>",
-    UnGlobalMessage: "Ha cambiado el estado de la bandera global. <br/> Se creará una acción de código local basada en esta acción de código global después de guardar este esquema."
+    UnGlobalMessage: "Ha cambiado el estado de la bandera global. <br/> Se creará una acción de código local basada en esta acción de código global después de guardar este esquema.",
+    EditParameters: "Edit parameters",
+    Parameters: "Parameters" ,
+    Text: "Text",
+    Number: "Number",
+    Checkbox: "Checkbox",
+    Dropdown: "Dropdown",
+    DateTime: "Date/Time",
+    Values: 'Values',
+    DropdownName: 'Name',
+    DropdownValue: 'Value',
+    DropdownShouldContainValues: 'Dropdown should contain values',
+    IsRequired: 'Required',
+    DefaultValue: 'Default value',
+    Json: 'Json'
+  },
+  EditParametersFormlabel: {
+    Title: "Edit parameter values",
+    NumberRequired: "Should be a numeric value",
+    DateShouldBeInISOFormat: "Date/Time parameter should be in ISO8601 format",
+    SwitchToJson: "Switch to JSON editor",
+    SwitchToConstructor: "Switch to parameter values editor",
+    InvalidJson: "JSON object is invalid or does not match the model"
   },
   ToolbarLabel: {
     CreateActivity: "Crear actividad",
+    CreateInline: 'Create inline (template)',
     CopySelected: "Copia seleccionada",
     Undo: "Deshacer",
     Redo: "Rehacer",
@@ -174,10 +223,17 @@
     Settings: "Ajustes",
     CreateTransition: "Crear una transición",
     CreateActivityTransition: "Crear una actividad y una transición.",
-    Legend: "Leyenda"
+    Legend: "Leyenda",
+    ProcessInfo: "Process Info",
+    Inline: "The scheme can be inlined"
   },
   ErrorActivityIsInitialCountText: "Un elemento debe estar marcado bandera Inicial",
+  ErrorActivityIsFinalCountText: "This scheme is Inlined. One or more elements must be marked flag Final",
   ErrorReadOnlySaveText: "El Diseñador en modo ReadOnly, no puede guardarlo.",
+  ErrorInvalidObjectsSaveText: function(objects) {
+    return "Can't save the schema. Those objects are in invalid state: " + objects;
+  },
+  BrokenReferencesDialogText: "This schema contains references to Actions, Conditions or Rules that aren't defined by this schema or current action providers. Do you want to keep them?",
   FormMaxHeight: 700,
   EditCodeSettings: {
     Height: 600,
@@ -210,7 +266,6 @@
     CreateEmptyType: "Crear",
     Format: "Formato"
   },
-  isjava: false,
   OverviewMap: {
     show: true,
     width: 300,
@@ -219,4 +274,3 @@
   UndoDepth: 200,
   DefaultCulture: "en-US"
 };
-

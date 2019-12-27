@@ -54,22 +54,36 @@ export class WfDesignerComponent implements OnInit {
       graphwidth: window.innerWidth - this.offsetX,
       graphheight: window.innerHeight - this.offsetY,
       forms: {
-        activity: function (params) {
-          console.log(params);
-          params.elements = [
-             { name: "Name", field: "Name", type: "input" },
-             { name: "State", field: "State", type: "input" }
-          ];
-          var form = new WorkflowDesignerForm(params);
-          var saveFunc = function (data) {
-             form.ClearTempField(data);
-             form.parameters.saveFunc(Object.assign(params.data, data));
-             return true;
-          };
-          form.showModal(saveFunc);
-        },
-        // transition:  function(params){
-        //     console.log(params);
+        // activity: function(params) {
+        //   console.log(params);
+        //   params.elements = [
+        //     { name: "Name", field: "Name", type: "select" },
+        //     { name: "State", field: "State", type: "input" }
+        //   ];
+        //   var form = new WorkflowDesignerForm(params);
+        //   var saveFunc = function (data) {
+        //     form.ClearTempField(data);
+        //     form.parameters.saveFunc(Object.assign(params.data, data));
+        //     return true;
+        //   };
+        //   form.showModal(saveFunc);
+        // },
+        // parameters: function(params) {
+        //   console.log(params);
+        //   params.elements = [
+        //     { name: "Name", field: "Name", type: "input" },
+        //     { name: "State", field: "State", type: "input" }
+        //   ];
+        //   var form = new WorkflowDesignerForm(params);
+        //   var saveFunc = function (data) {
+        //     form.ClearTempField(data);
+        //     form.parameters.saveFunc(Object.assign(params.data, data));
+        //     return true;
+        //   };
+        //   form.showModal(saveFunc);
+        // },
+        // transition: function (params) {
+        //   console.log(params);
         // },
         // actors:  function(params){
         //     console.log(params);
